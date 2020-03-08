@@ -23,9 +23,8 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
-  // 配置 mysql
+  // 数据库配置
   config.mysql = {
-    // database configuration
     client: {
       // host 服务器地址
       host: 'localhost',
@@ -42,6 +41,18 @@ module.exports = appInfo => {
     app: true,
     // load into agent, default is close
     agent: false,
+  };
+
+  // 跨域设置
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+    domainWhiteList: [ '*' ],
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,POST,OPTINOS',
   };
 
   return {
