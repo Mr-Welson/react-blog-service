@@ -6,6 +6,21 @@ class IndexController extends Controller {
   async index() {
     this.ctx.body = 'result';
   }
+
+  handleSuccessResult(data) {
+    return { code: 200, message: 'success', data };
+  }
+
+  handleErrorResult(error, defaultData) {
+    // console.log(error);
+    return {
+      code: 500,
+      errorMsg: error.sqlMessage,
+      message: '服务器错误',
+      data: defaultData,
+    };
+  }
+
   // 获取文章列表
   async getArticleList() {
     const { ctx, app } = this;
@@ -18,8 +33,12 @@ class IndexController extends Controller {
       type.name as typeName 
       FROM article LEFT JOIN type ON article.type_id = type.id
     `;
-    const data = await app.mysql.query(sql);
-    ctx.body = { data };
+    try {
+      const data = await app.mysql.query(sql);
+      ctx.body = this.handleSuccessResult(data);
+    } catch (error) {
+      ctx.body = this.handleErrorResult(error, []);
+    }
   }
   // 根据ID获取文章详情
   async getArticleById() {
@@ -37,8 +56,13 @@ class IndexController extends Controller {
       FROM article LEFT JOIN type ON article.type_id = type.id 
       WHERE article.id = ${id}
     `;
-    const data = await app.mysql.query(sql);
-    ctx.body = { data };
+
+    try {
+      const data = await app.mysql.query(sql);
+      ctx.body = this.handleSuccessResult(data[0]);
+    } catch (error) {
+      ctx.body = this.handleErrorResult(error, {});
+    }
   }
   // 获取博客类别列表
   async getTypeList() {
@@ -47,7 +71,8 @@ class IndexController extends Controller {
   }
   // 根据博客类别获取文章列表
   async getArticleListByTypeId() {
-    const id = this.ctx.params.id;
+    const { ctx, app } = this;
+    const id = ctx.params.id;
     const sql = `
       SELECT article.id as id , 
       article.title as title ,
@@ -58,8 +83,13 @@ class IndexController extends Controller {
       FROM article LEFT JOIN type ON article.type_id = type.id 
       WHERE type_id = ${id}
     `;
-    const data = await this.app.mysql.query(sql);
-    this.ctx.body = { data };
+
+    try {
+      const data = await app.mysql.query(sql);
+      ctx.body = this.handleSuccessResult(data);
+    } catch (error) {
+      ctx.body = this.handleErrorResult(error, []);
+    }
   }
 }
 
