@@ -5,12 +5,20 @@
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-module.exports = appInfo => {
+module.exports = (appInfo) => {
   /**
    * built-in config
    * @type {Egg.EggAppConfig}
    **/
-  const config = exports = {};
+  const config = (exports = {});
+
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7002,
+      hostname: '127.0.0.1',
+    },
+  };
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1583334997747_6658';
@@ -31,9 +39,9 @@ module.exports = appInfo => {
       // port
       port: '3306',
       // username
-      user: 'root',
+      user: 'welson',
       // password
-      password: 'root',
+      password: '123456',
       // database
       database: 'react_blog',
     },
@@ -48,7 +56,7 @@ module.exports = appInfo => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ '*' ],
+    domainWhiteList: ['*'],
   };
   config.cors = {
     origin: '*',
