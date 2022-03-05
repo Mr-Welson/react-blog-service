@@ -40,7 +40,7 @@ class IndexController extends Controller {
       ctx.body = this.handleErrorResult(error, []);
     }
   }
-  // 根据ID获取文章详情
+  // 根据文章ID获取文章详情
   async getArticleById() {
     const { ctx, app } = this;
     const id = ctx.params.id;

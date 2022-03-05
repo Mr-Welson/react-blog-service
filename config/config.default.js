@@ -59,8 +59,9 @@ module.exports = (appInfo) => {
     domainWhiteList: ['*'],
   };
   config.cors = {
-    origin: '*',
-    allowMethods: 'GET,POST,OPTINOS',
+    origin: 'http://localhost:5010',
+    credentials: true, // 允许 cookie 跨域
+    allowMethods: 'GET,POST,OPTINOS,DELETE,PUT',
   };
 
   return {
