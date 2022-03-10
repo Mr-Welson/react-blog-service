@@ -39,7 +39,7 @@ module.exports = (appInfo) => {
       // port
       port: '3306',
       // username
-      user: 'welson',
+      user: 'root',
       // password
       password: '123456',
       // database

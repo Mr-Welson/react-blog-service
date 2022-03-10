@@ -121,6 +121,41 @@ class IndexController extends Controller {
       ctx.body = this.handleErrorResult(error);
     }
   }
+
+  async deleteArticle() {
+    const { ctx, app } = this;
+    const id = ctx.params.id;
+    try {
+      const result = await app.mysql.delete('article', { id });
+      ctx.body = this.handleSuccessResult(result);
+    } catch (error) {
+      ctx.body = this.handleErrorResult(error);
+
+    }
+  }
+
+  async getArticleById() {
+    const { ctx, app } = this;
+    const id = ctx.params.id;
+    const sql = `
+      SELECT article.id as id,
+      article.title as title,
+      article.introduce as introduce,
+      article.content as content,
+      article.create_time as createTime,
+      article.view_count as viewCount,
+      type.name as typeName,
+      type.id as typeId 
+      FROM article LEFT JOIN type ON article.type_id = type.id
+      WHERE article.id = ${id}
+    `;
+    try {
+      const data = await app.mysql.query(sql);
+      ctx.body = this.handleSuccessResult(data[0]);
+    } catch (error) {
+      ctx.body = this.handleErrorResult(error, {});
+    }
+  }
 }
 
 module.exports = IndexController;

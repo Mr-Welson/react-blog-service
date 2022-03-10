@@ -11,4 +11,6 @@ module.exports = (app) => {
   router.get('/admin/queryArticleList', adminAuth, index.queryArticleList);
   router.post('/admin/addArticle', adminAuth, index.addArticle);
   router.post('/admin/updateArticle', adminAuth, index.updateArticle);
+  router.get('/admin/deleteArticle/:id', adminAuth, index.deleteArticle);
+  router.get('/admin/getArticleById/:id', adminAuth, index.getArticleById);
 };
