@@ -56,10 +56,10 @@ module.exports = (appInfo) => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: ['*'],
+    domainWhiteList: ['http://localhost:5000', 'http://localhost:5010'],
   };
   config.cors = {
-    origin: 'http://localhost:5010',
+    // origin: 'http://localhost:5010',
     credentials: true, // 允许 cookie 跨域
     allowMethods: 'GET,POST,OPTINOS,DELETE,PUT',
   };
